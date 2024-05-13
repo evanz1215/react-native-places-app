@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import PlacesItem from "./PlacesItem";
+import PropTypes from "prop-types";
 
 const PlacesList = ({ places }) => {
   if (!places || places.length === 0) {
@@ -23,6 +24,10 @@ const PlacesList = ({ places }) => {
 };
 
 export default PlacesList;
+
+PlacesList.propTypes = {
+  places: PropTypes.array.isRequired,
+};
 
 const styles = StyleSheet.create({
   fallbackContainer: {

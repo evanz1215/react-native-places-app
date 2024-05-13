@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
+import PropTypes from "prop-types";
 
 const PlacesItem = ({ place, onSelect }) => {
   return (
@@ -14,5 +15,10 @@ const PlacesItem = ({ place, onSelect }) => {
 };
 
 export default PlacesItem;
+
+PlacesItem.propTypes = {
+  place: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
 
 const styles = StyleSheet.create({});
