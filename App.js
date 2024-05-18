@@ -8,14 +8,38 @@ import IconButton from "./components/UI/IconButton";
 import "react-native-reanimated";
 import { Colors } from "./constants/colors";
 import Map from "./screens/Map";
+import { useCallback, useEffect, useState } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import { initDatabase } from "./util/database";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    const initializeDatabase = async () => {
+      await initDatabase();
+      setDbInitialized(true);
+    };
+
+    initializeDatabase();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (dbInitialized) {
+      await SplashScreen.hideAsync();
+    }
+  }, [dbInitialized]);
+
+  if (!dbInitialized) {
+    return null;
+  }
+
   return (
     <>
       <StatusBar style="dark" />
-      <NavigationContainer>
+      <NavigationContainer onReady={onLayoutRootView}>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
