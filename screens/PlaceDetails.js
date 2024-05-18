@@ -30,7 +30,12 @@ const PlaceDetails = ({ route, navigation }) => {
     );
   }
 
-  const showOnMapHandler = () => {};
+  const showOnMapHandler = () => {
+    navigation.navigate("Map", {
+      initialLat: fetchPlace.location.lat,
+      initialLng: fetchPlace.location.lng,
+    });
+  };
 
   return (
     <ScrollView>
