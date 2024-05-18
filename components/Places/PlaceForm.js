@@ -11,7 +11,6 @@ const PlaceForm = () => {
   const [pickedLocation, setPickedLocation] = useState();
 
   const changeTitleHandler = (enteredText) => {
-    console.log(enteredText);
     setEnteredTitle(enteredText);
   };
 
