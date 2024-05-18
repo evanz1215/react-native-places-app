@@ -12,7 +12,7 @@ const PlaceDetails = ({ route, navigation }) => {
   useEffect(() => {
     const loadPlaceData = async () => {
       const place = await fetchPlaceDetails(selectedPlaceId);
-      console.log(place);
+
       setFetchedPlace(place);
       navigation.setOptions({
         title: place.title,
