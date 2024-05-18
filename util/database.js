@@ -1,4 +1,5 @@
 import * as SQLite from "expo-sqlite";
+import { Place } from "../models/places";
 
 // Singleton pattern to manage the database connection
 let db;
@@ -30,11 +31,8 @@ export const initDatabase = async () => {
 
 export const insertPlace = async (place) => {
   const db = await getDatabase();
-  await db.execAsync(
-    `
-    INSERT INTO places (title, imageUri, address, lat, lng)
-    VALUES (?, ?, ?, ?, ?);
-  `,
+  await db.runAsync(
+    `INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
     [
       place.title,
       place.imageUri,
@@ -43,4 +41,27 @@ export const insertPlace = async (place) => {
       place.location.lng,
     ]
   );
+};
+
+export const fetchPlaces = async () => {
+  const db = await getDatabase();
+  const result = await db.getAllAsync("SELECT * FROM places");
+  const places = [];
+
+  for (const dp of result) {
+    places.push(
+      new Place(
+        dp.title,
+        dp.imageUri,
+        {
+          address: dp.address,
+          lat: dp.lat,
+          lng: dp.lng,
+        },
+        dp.id
+      )
+    );
+  }
+
+  return places;
 };

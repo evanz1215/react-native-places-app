@@ -3,8 +3,17 @@ import React from "react";
 import PlacesItem from "./PlacesItem";
 import PropTypes from "prop-types";
 import { Colors } from "../../constants/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const PlacesList = ({ places }) => {
+  const navigation = useNavigation();
+
+  const selectPlaceHandler = (id) => {
+    navigation.navigate("PlaceDetails", {
+      placeId: id,
+    });
+  };
+
   if (!places || places.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
@@ -20,7 +29,9 @@ const PlacesList = ({ places }) => {
       style={styles.list}
       data={places}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PlacesItem place={item} onSelect={() => {}} />}
+      renderItem={({ item }) => (
+        <PlacesItem place={item} onSelect={selectPlaceHandler} />
+      )}
     />
   );
 };

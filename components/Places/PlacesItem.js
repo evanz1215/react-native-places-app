@@ -6,7 +6,7 @@ import { Colors } from "../../constants/colors";
 const PlacesItem = ({ place, onSelect }) => {
   return (
     <Pressable
-      onPress={onSelect}
+      onPress={() => onSelect(place.id)}
       style={({ pressed }) => [styles.item, pressed && styles.passed]}
     >
       <Image style={styles.image} source={{ uri: place.imageUri }} />
