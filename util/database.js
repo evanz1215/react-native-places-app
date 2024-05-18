@@ -65,3 +65,27 @@ export const fetchPlaces = async () => {
 
   return places;
 };
+
+export const fetchPlaceDetails = async (id) => {
+  const db = await getDatabase();
+  const result = await db.getAllAsync("SELECT * FROM places WHERE id = ?", [
+    id,
+  ]);
+
+  if (result.length === 0) {
+    return null;
+  }
+
+  const dp = result[0];
+
+  return new Place(
+    dp.title,
+    dp.imageUri,
+    {
+      address: dp.address,
+      lat: dp.lat,
+      lng: dp.lng,
+    },
+    dp.id
+  );
+};
